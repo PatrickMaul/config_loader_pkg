@@ -31,7 +31,7 @@ No specific installation is required. The provided code can be directly integrat
 Import the `ConfigLoader` class into your Python script:
 
 ```python
-from config_loader import ConfigLoader
+from pm_config_loader import ConfigLoader
 ```
 
 ### Initialization

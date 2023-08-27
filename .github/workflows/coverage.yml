@@ -19,7 +19,7 @@ jobs:
           pip install coverage
       - name: Export Python path
         run:
-          export PYTHONPATH=home/runner/work/config_loader_pkg/config_loader_pkg/:home/runner/work/config_loader_pkg/config_loader_pkg/src/
+          export PYTHONPATH=home/runner/work/config_loader_pkg/config_loader_pkg/:home/runner/work/config_loader_pkg/config_loader_pkg/pm_config_loader/
       - name: Coverage
         run: |
           coverage run --source=./src -m unittest discover ./test/tests/unit

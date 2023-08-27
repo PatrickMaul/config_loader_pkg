@@ -23,7 +23,7 @@ jobs:
           pip install -U twine
       - name: Export Python path
         run:
-          export PYTHONPATH=home/runner/work/config_loader_pkg/config_loader_pkg/:home/runner/work/config_loader_pkg/config_loader_pkg/src/
+          export PYTHONPATH=home/runner/work/config_loader_pkg/config_loader_pkg/:home/runner/work/config_loader_pkg/config_loader_pkg/pm_config_loader/
       - name: Build and Release
         run: |
           python -m build && python -m twine upload -r testpypi -u ${{ secrets.PYPI_USER }} -p ${{ secrets.PYPI_PASSWORD }} dist/*
