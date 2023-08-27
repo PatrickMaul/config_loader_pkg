@@ -9,20 +9,12 @@ class ConfigLoader:
         self.possible_codecs: list = ['json', 'yml', 'yaml']
         self.is_file = os.path.isfile(path=path)
         self.is_dir = os.path.isdir(s=path)
-
         self.target_path: str = path
         self.env_replace: bool = env_replace
 
-    def _validate_path(self, path: str) -> str:
-        # Check path
-        if not os.path.exists(path=path):  # Path does not exist
-            raise FileNotFoundError(f'Path not found. Please check the path: {path}')
-
-        # Check dir or single file
-        if not self.is_file or not self.is_dir:
-            raise AttributeError(f'Path "{self.path}" is neither a list nor a single file.')
-
-        return path
+        # Check exist and is a dir or single file
+        if not os.path.exists(path=path) and not (self.is_file or self.is_dir):
+            raise AttributeError(f'Path "{self.target_path}" is neither a directory nor a single file.')
 
     def _validate_file(self, file_path: str) -> str:
         if os.path.exists(path=file_path) and os.path.isfile(path=file_path):
@@ -60,17 +52,16 @@ class ConfigLoader:
                     env_key_path.append(p)
             env_key_paths.append(env_key_path)
 
-        # Replace all `_` with `-`. Otherwise, multiword job names won't match.
-        # DUMMY_JOB___CFG___FOO="bla" => ['dummy-job', 'cfg', 'foo']
+        # Replace all `_` with `-`. Otherwise, multiword keys won't match.
+        # DUMMY_1___CFG___FOO="bla" => ['dummy-1', 'cfg', 'foo']
         for index, env_key_path in enumerate(env_key_paths):
             for sub_index, key in enumerate(env_key_path):
                 env_key_paths[index][sub_index] = key.replace('_', '-')
 
         # Generate a dict which corresponds to the structure of the value to be updated.
-        # ['dummy-job', 'cfg', 'foo'] => {"jobs": {"dummy-job": {"cfg": {"foo": "bla"}}
+        # ['dummy-1', 'cfg', 'foo'] => {"dummy-1": {"cfg": {"foo": "bla"}}}
         for index, env_key_path in enumerate(env_key_paths):
-            config_update = self._generate_update_dict(os.environ.get(env_keys[index]), '.'.join(env_key_path))
-            print(config_update)
+            config_update = self._generate_update_dict(value=os.environ.get(env_keys[index]), keys='.'.join(env_key_path))
             self._update(config, config_update)
 
     def _generate_update_dict(self, value: any, keys: str):
@@ -91,7 +82,7 @@ class ConfigLoader:
 
     def load(self) -> list:
         configs = []
-        self.target_path = self._validate_path(self.target_path)
+        self.target_path = self.target_path
 
         if self.is_file:
             configs.append({'path': self.target_path, **self._load_config()})
