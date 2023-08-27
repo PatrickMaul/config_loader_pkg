@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pm_config_loader"
-version = "0.0.1"
+version = "0.0.2.a"
 authors = [
   { name="Patrick Maul", email="maulpatrick1996@gmail.com" },
 ]

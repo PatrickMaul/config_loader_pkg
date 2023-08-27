@@ -20,7 +20,7 @@ jobs:
           pip install -r requirements.txt
       - name: Export Python path
         run:
-          export PYTHONPATH=home/runner/work/config_loader_pkg/config_loader_pkg/:home/runner/work/config_loader_pkg/config_loader_pkg/src/
+          export PYTHONPATH=home/runner/work/config_loader_pkg/config_loader_pkg/:home/runner/work/config_loader_pkg/config_loader_pkg/pm_config_loader/
       - name: Run unittest's
         run: |
           python -m unittest discover test/tests/unit
