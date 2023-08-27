@@ -4,6 +4,22 @@
 
 The `ConfigLoader` class enables the loading of configuration files in JSON or YAML format, with the possibility to insert environment variables into the loaded configurations.
 
+## Table of Contents
+
+<!-- TOC -->
+* [ConfigLoader](#configloader)
+  * [Table of Contents](#table-of-contents)
+  * [Installation](#installation)
+  * [Usage](#usage)
+    * [Import](#import)
+    * [Initialization](#initialization)
+    * [Loading Configuration](#loading-configuration)
+  * [Configuration Formats](#configuration-formats)
+  * [Replacing Environment Variables](#replacing-environment-variables)
+<!-- TOC -->
+
+**Note**: To see the **Developers documentation** click [here](./DEVELOPERS_README.md).
+
 ## Installation
 
 No specific installation is required. The provided code can be directly integrated into your Python project.
