@@ -96,6 +96,10 @@ class TestConfigLoader(unittest.TestCase):
         self.assertEqual(expected_instance.get('target_path'), config_loader.target_path)
         self.assertEqual(expected_instance.get('env_replace'), config_loader.env_replace)
 
+    def test_init_raises_with_is_file_and_is_dir_false(self):
+        with self.assertRaises(AttributeError) as exc:
+            config_loader = ConfigLoader(path='foo')
+
     # def test_config_loader_loads_yaml_files(self):
         # self.init_config_loader_yaml()
         # config = self.config_loader.load()
