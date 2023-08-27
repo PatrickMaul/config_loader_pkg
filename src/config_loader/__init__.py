@@ -52,14 +52,14 @@ class ConfigLoader:
                     env_key_path.append(p)
             env_key_paths.append(env_key_path)
 
-        # Replace all `_` with `-`. Otherwise, multiword job names won't match.
-        # DUMMY_JOB___CFG___FOO="bla" => ['dummy-job', 'cfg', 'foo']
+        # Replace all `_` with `-`. Otherwise, multiword keys won't match.
+        # DUMMY_1___CFG___FOO="bla" => ['dummy-1', 'cfg', 'foo']
         for index, env_key_path in enumerate(env_key_paths):
             for sub_index, key in enumerate(env_key_path):
                 env_key_paths[index][sub_index] = key.replace('_', '-')
 
         # Generate a dict which corresponds to the structure of the value to be updated.
-        # ['dummy-job', 'cfg', 'foo'] => {"jobs": {"dummy-job": {"cfg": {"foo": "bla"}}
+        # ['dummy-1', 'cfg', 'foo'] => {"dummy-1": {"cfg": {"foo": "bla"}}}
         for index, env_key_path in enumerate(env_key_paths):
             config_update = self._generate_update_dict(value=os.environ.get(env_keys[index]), keys='.'.join(env_key_path))
             self._update(config, config_update)
