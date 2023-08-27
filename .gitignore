@@ -1,0 +1,15 @@
+# Python
+venv
+*.pyc
+*/**/__pycache__/
+
+# IDE
+.idea
+
+# Coverage
+.coverage
+htmlcov
+coverage.xml
+
+# MacOS
+.DS_store

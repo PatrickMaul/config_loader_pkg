@@ -1,0 +1,5 @@
+dummy: "config 1"
+list-1:
+  - "foo"
+dict-1:
+  child: "foo"
