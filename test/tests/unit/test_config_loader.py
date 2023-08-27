@@ -1,10 +1,7 @@
 import unittest
-from unittest import mock
-
-import src.config_loader
 from src.config_loader import ConfigLoader
 
-config_dir = './tests/fixtures/configs'
+config_dir = './test/tests/fixtures/configs'
 yaml_config_path = f'{config_dir}/config.yaml'
 yml_config_path = f'{config_dir}/config.yml'
 json_config_path = f'{config_dir}/config.json'

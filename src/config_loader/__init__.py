@@ -10,6 +10,10 @@ class ConfigLoader:
         self.is_file = os.path.isfile(path=path)
         self.is_dir = os.path.isdir(s=path)
 
+        # Check dir or single file
+        if not (self.is_file or self.is_dir):
+            raise AttributeError(f'Path "{self.target_path}" is neither a directory nor a single file.')
+
         self.target_path: str = path
         self.env_replace: bool = env_replace
 
@@ -17,10 +21,6 @@ class ConfigLoader:
         # Check path
         if not os.path.exists(path=path):  # Path does not exist
             raise FileNotFoundError(f'Path not found. Please check the path: {path}')
-
-        # Check dir or single file
-        if not self.is_file or not self.is_dir:
-            raise AttributeError(f'Path "{self.path}" is neither a list nor a single file.')
 
         return path
 
