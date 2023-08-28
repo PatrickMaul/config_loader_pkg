@@ -64,7 +64,7 @@ class TestConfigLoader(unittest.TestCase):
         self.assertEqual(expected_instance.get('env_replace'), config_loader.env_replace)
 
     def test_init_raises_with_invalid_path(self):
-        with self.assertRaises(AttributeError):
+        with self.assertRaises(FileNotFoundError):
             ConfigLoader(path='foo')
 
     def test_validate_file_returns_correct_codec(self):

@@ -3,6 +3,7 @@ import yaml
 import json
 import collections.abc
 
+
 class ConfigLoader:
     def __init__(self, path: str, env_replace: bool = False) -> None:
         """
@@ -11,15 +12,15 @@ class ConfigLoader:
         :param path: The path to the configuration file or configuration directory.
         :param env_replace: A boolean value indicating whether to replace environment variables. Default: False
         """
+        # Check if 'path' exists
+        if not os.path.exists(path=path):
+            raise FileNotFoundError(f'Path "{path}" not found!')
+
         self.possible_codecs: list = ['json', 'yml', 'yaml']
         self.is_file = os.path.isfile(path=path)
         self.is_dir = os.path.isdir(s=path)
         self.target_path: str = path
         self.env_replace: bool = env_replace
-
-        # Check if 'path' exists and whether it's a file or directory
-        if not os.path.exists(path=path) and not (self.is_file or self.is_dir):
-            raise AttributeError(f'The path "{self.target_path}" is neither a directory nor a single file.')
 
     def _validate_file(self, file_path: str) -> str:
         """
@@ -37,7 +38,7 @@ class ConfigLoader:
 
             return codec
 
-    def _load_config(self, path: str = None):
+    def _load_config(self, path: str = None) -> dict:
         """
         Loads the configuration from a file.
 
@@ -57,7 +58,7 @@ class ConfigLoader:
 
         return config
 
-    def _env_replace(self, config):
+    def _env_replace(self, config) -> None:
         """
         Replaces configuration values with corresponding environment variables.
 
@@ -86,7 +87,7 @@ class ConfigLoader:
             config_update = self._generate_update_dict(value=os.environ.get(env_keys[index]), keys='.'.join(env_key_path))
             self._update(config, config_update)
 
-    def _generate_update_dict(self, value: any, keys: str):
+    def _generate_update_dict(self, value: any, keys: str) -> dict:
         """
         Generates an update dictionary for the environment variable.
 
@@ -100,7 +101,7 @@ class ConfigLoader:
         else:  # Last key
             return {keys: value}
 
-    def _update(self, config: dict, update: dict | collections.abc.Mapping):
+    def _update(self, config: dict, update: dict | collections.abc.Mapping) -> dict:
         """
         Updates the configuration with values from the update dictionary.
 
