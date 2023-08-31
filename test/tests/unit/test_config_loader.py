@@ -40,11 +40,11 @@ class TestConfigLoader(unittest.TestCase):
 
         config_loader = ConfigLoader(path=expected_instance.get('target_path'))
 
-        self.assertEqual(expected_instance.get('possible_codecs'), config_loader.possible_codecs)
-        self.assertEqual(expected_instance.get('is_file'), config_loader.is_file)
-        self.assertEqual(expected_instance.get('is_dir'), config_loader.is_dir)
-        self.assertEqual(expected_instance.get('target_path'), config_loader.target_path)
-        self.assertEqual(expected_instance.get('env_replace'), config_loader.env_replace)
+        self.assertEqual(expected_instance.get('possible_codecs'), config_loader._possible_codecs)
+        self.assertEqual(expected_instance.get('is_file'), config_loader._is_file)
+        self.assertEqual(expected_instance.get('is_dir'), config_loader._is_dir)
+        self.assertEqual(expected_instance.get('target_path'), config_loader._target_path)
+        self.assertEqual(expected_instance.get('env_replace'), config_loader._env_replace)
 
     def test_init_returns_correct_instance_with_config_dir(self):
         expected_instance: dict = {
@@ -57,11 +57,11 @@ class TestConfigLoader(unittest.TestCase):
 
         config_loader = ConfigLoader(path=expected_instance.get('target_path'))
 
-        self.assertEqual(expected_instance.get('possible_codecs'), config_loader.possible_codecs)
-        self.assertEqual(expected_instance.get('is_file'), config_loader.is_file)
-        self.assertEqual(expected_instance.get('is_dir'), config_loader.is_dir)
-        self.assertEqual(expected_instance.get('target_path'), config_loader.target_path)
-        self.assertEqual(expected_instance.get('env_replace'), config_loader.env_replace)
+        self.assertEqual(expected_instance.get('possible_codecs'), config_loader._possible_codecs)
+        self.assertEqual(expected_instance.get('is_file'), config_loader._is_file)
+        self.assertEqual(expected_instance.get('is_dir'), config_loader._is_dir)
+        self.assertEqual(expected_instance.get('target_path'), config_loader._target_path)
+        self.assertEqual(expected_instance.get('env_replace'), config_loader._env_replace)
 
     def test_init_raises_with_invalid_path(self):
         with self.assertRaises(FileNotFoundError):
@@ -175,7 +175,7 @@ class TestConfigLoader(unittest.TestCase):
         config_loader = ConfigLoader(path=json_config_path)
 
         config_loader._generate_update_dict = mock.MagicMock()
-        config_loader._env_replace(config=expected_config)
+        config_loader._replace_env(config=expected_config)
 
         config_loader._generate_update_dict.assert_called_once_with(value='foo', keys='key-1.child-key-1.grandchild-key-1')
         os.environ.pop('KEY_1___CHILD_KEY_1___GRANDCHILD_KEY_1')
@@ -185,7 +185,7 @@ class TestConfigLoader(unittest.TestCase):
         config_loader = ConfigLoader(path=json_config_path)
 
         config_loader._generate_update_dict = mock.MagicMock()
-        config_loader._env_replace(config=expected_config)
+        config_loader._replace_env(config=expected_config)
 
         config_loader._generate_update_dict.assert_called_once_with(value='foo', keys='key-1')
         os.environ.pop('KEY_1___')
@@ -206,7 +206,7 @@ class TestConfigLoader(unittest.TestCase):
     def test_load_calls_env_replace(self):
         config_loader = ConfigLoader(path=yml_config_path, env_replace=True)
 
-        config_loader._env_replace = mock.MagicMock()
+        config_loader._replace_env = mock.MagicMock()
         config_loader.load()
 
-        config_loader._env_replace.assert_called_once()
+        config_loader._replace_env.assert_called_once()

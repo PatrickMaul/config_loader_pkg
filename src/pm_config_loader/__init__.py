@@ -16,11 +16,11 @@ class ConfigLoader:
         if not os.path.exists(path=path):
             raise FileNotFoundError(f'Path "{path}" not found!')
 
-        self.possible_codecs: list = ['json', 'yml', 'yaml']
-        self.is_file = os.path.isfile(path=path)
-        self.is_dir = os.path.isdir(s=path)
-        self.target_path: str = path
-        self.env_replace: bool = env_replace
+        self._possible_codecs: list = ['json', 'yml', 'yaml']
+        self._is_file = os.path.isfile(path=path)
+        self._is_dir = os.path.isdir(s=path)
+        self._target_path: str = path
+        self._env_replace: bool = env_replace
 
     def _validate_file(self, file_path: str) -> str:
         """
@@ -33,7 +33,7 @@ class ConfigLoader:
             file: str = file_path.rsplit("/", )[-1]
             codec: str = file.rsplit('.', 1)[-1]
 
-            if codec not in self.possible_codecs:  # Incorrect file codec
+            if codec not in self._possible_codecs:  # Incorrect file codec
                 raise TypeError(f'The file "{file}" cannot be processed. Please specify a `json` or `yml/yaml` file.')
 
             return codec
@@ -45,7 +45,7 @@ class ConfigLoader:
         :param path: The path to the configuration file.
         :return: The loaded configuration.
         """
-        path: str = path or self.target_path
+        path: str = path or self._target_path
         # Check file
         file_ending: str = self._validate_file(file_path=path)
 
@@ -58,7 +58,7 @@ class ConfigLoader:
 
         return config
 
-    def _env_replace(self, config) -> None:
+    def _replace_env(self, config) -> None:
         """
         Replaces configuration values with corresponding environment variables.
 
@@ -124,20 +124,20 @@ class ConfigLoader:
         :return: A sorted list of loaded configurations.
         """
         configs = []
-        self.target_path = self.target_path
+        self._target_path = self._target_path
 
-        if self.is_file:
-            configs.append({'path': self.target_path, **self._load_config()})
-        elif self.is_dir:
-            config_paths = os.listdir(self.target_path)
+        if self._is_file:
+            configs.append({'path': self._target_path, **self._load_config()})
+        elif self._is_dir:
+            config_paths = os.listdir(self._target_path)
             # Load and add configuration
             for file in config_paths:
-                config_path = f'{self.target_path}/{file}'
+                config_path = f'{self._target_path}/{file}'
                 configs.append({'path': config_path, **self._load_config(path=config_path)})
 
-        if self.env_replace:
+        if self._env_replace:
             for config in configs:
-                self._env_replace(config)
+                self._replace_env(config)
 
         # Sort files in ascending order by path
         return sorted(configs, key=lambda d: d['path'])
