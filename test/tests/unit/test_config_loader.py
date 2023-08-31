@@ -1,7 +1,7 @@
 import os
 import unittest
 from unittest import mock
-from pm_config_loader import ConfigLoader
+from src.pm_config_loader import ConfigLoader
 
 config_dir = './test/tests/fixtures/configs'
 yaml_config_path = f'{config_dir}/config.yaml'

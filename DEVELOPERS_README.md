@@ -52,6 +52,7 @@ To run unit tests for the `ConfigLoader` module, follow these steps:
     - Execute the following command to run coverage tests:  
        **Note**: Install command for `coverage`: `pip install coverage`
        ```bash
+       pip install -U coverage
        coverage run --source=./pm_config_loader -m unittest discover ./test/tests/unit && coverage html -d test/tests/htmlcov
        ```
       **Note**: You might need to export the `PYTHONPATH`.
