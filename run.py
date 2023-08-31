@@ -1,4 +1,4 @@
-from pm_config_loader import ConfigLoader
+from src.pm_config_loader import ConfigLoader
 
 
 config_path: str = './assets/dummy_config_1.yml'

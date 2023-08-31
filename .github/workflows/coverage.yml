@@ -22,7 +22,7 @@ jobs:
           export PYTHONPATH=home/runner/work/config_loader_pkg/config_loader_pkg/:home/runner/work/config_loader_pkg/config_loader_pkg/pm_config_loader/
       - name: Coverage
         run: |
-          coverage run --source=./pm_config_loader -m unittest discover ./test/tests/unit
+          coverage run --source=./src -m unittest discover ./test/tests/unit
           coverage report
           coverage xml
       - name: Upload coverage reports to Codecov

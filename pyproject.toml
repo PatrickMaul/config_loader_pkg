@@ -4,19 +4,24 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pm_config_loader"
-version = "0.0.2.a"
+version = "0.0.3"
+description = "This is a simple ConfigLoader with possibility to do a Env replace."
 authors = [
   { name="Patrick Maul", email="maulpatrick1996@gmail.com" },
 ]
-description = "This is a simple ConfigLoader with possibility to do a Env replace."
 readme = "README.md"
 requires-python = ">=3.10"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-]
+license = "MIT"
 
 [project.urls]
 "Homepage" = "https://github.com/PatrickMaul/config_loader_pkg"
 "Bug Tracker" = "https://github.com/PatrickMaul/config_loader_pkg/issues"
+
+[tool.poetry]
+include = [
+  "src"
+]
+exclude = [
+  "test",
+  "assets"
+]
