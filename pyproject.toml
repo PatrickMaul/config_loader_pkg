@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "pm_config_loader"
-version = "0.0.6"
+version = "0.0.7"
 description = "This is a simple ConfigLoader with possibility to do a Env replace."
 authors = [
   { name="Patrick Maul", email="maulpatrick1996@gmail.com" },
@@ -12,9 +12,9 @@ authors = [
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
-dependencies = [
-    "PyYAML==3.11",
-]
+# dependencies = [
+#     "PyYAML>=6.0.1",
+# ]
 
 [project.urls]
 "Homepage" = "https://github.com/PatrickMaul/config_loader_pkg"
